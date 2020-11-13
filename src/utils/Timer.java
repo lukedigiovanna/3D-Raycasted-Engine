@@ -14,4 +14,12 @@ public class Timer {
         double seconds = elapsed/1000.0;
         return seconds;
     }
+    
+    public void wait(double seconds) {
+    	long wait = (long)(seconds *  1000L);
+    	long now = System.currentTimeMillis();
+    	long end = now + wait;
+    	while (System.currentTimeMillis() - now < end)
+    		continue;
+    }
 }
