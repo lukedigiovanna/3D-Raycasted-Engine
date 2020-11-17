@@ -23,6 +23,14 @@ public class Screen {
         return this.screen;
     }
 
+    public int width() {
+        return screen.getWidth();
+    }
+
+    public int height() {
+        return screen.getHeight();
+    }
+
     public int getWidth() {
         return screen.getWidth();
     }

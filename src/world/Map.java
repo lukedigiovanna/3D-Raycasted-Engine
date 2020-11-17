@@ -29,4 +29,8 @@ public class Map {
     public int height() {
         return map.length;
     }
+
+    public int[][] get() {
+        return this.map;
+    }
 }

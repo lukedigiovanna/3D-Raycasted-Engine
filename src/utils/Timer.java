@@ -18,8 +18,7 @@ public class Timer {
     public void wait(double seconds) {
     	long wait = (long)(seconds *  1000L);
     	long now = System.currentTimeMillis();
-    	long end = now + wait;
-    	while (System.currentTimeMillis() - now < end)
+    	while (System.currentTimeMillis() - now < wait)
     		continue;
     }
 }
