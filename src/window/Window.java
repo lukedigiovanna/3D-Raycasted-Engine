@@ -9,6 +9,7 @@ public class Window {
     private JFrame frame;
     private JPanel panel;
     private Screen screen;
+    public Input input;
 
     public Window(String name) {
         this(name, Program.DEFAULT_WINDOW_WIDTH, Program.DEFAULT_WINDOW_HEIGHT);
@@ -19,9 +20,12 @@ public class Window {
         frame.setSize(width, height);
         frame.setLocation((Program.SCREEN_WIDTH-width)/2, (Program.SCREEN_HEIGHT-height)/2);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.requestFocus();
         panel = new Panel(this);
         frame.setContentPane(panel);
         frame.setVisible(true);
+        input = new Input();
+        input.link(panel);
     }
 
     public void setScreen(Screen screen) {

@@ -8,6 +8,7 @@ public class Panel extends JPanel {
 
     public Panel(Window window) {
         this.window = window;
+        this.setFocusable(true);
     }
 
     public void paintComponent(Graphics g) {
