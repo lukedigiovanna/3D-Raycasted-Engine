@@ -45,14 +45,12 @@ public class Vector2 {
         this.y = newY; 
     }
 
-    public void add(Vector2 other) {
-        this.x += other.x;
-        this.y += other.y;
+    public Vector2 add(Vector2 other) {
+        return new Vector2(this.x + other.x, this.y + other.y);
     }
 
-    public void times(double scalar) {
-        this.x *= scalar;
-        this.y *= scalar; 
+    public Vector2 times(double scalar) {
+        return new Vector2(this.x * scalar, this.y * scalar);
     }
 
     public Vector2 copy() {

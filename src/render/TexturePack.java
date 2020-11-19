@@ -11,7 +11,10 @@ public class TexturePack {
 
     public static final int DEFAULT_TEX_WIDTH = 64, DEFAULT_TEX_HEIGHT = 64;
 
+    private static Texture NULL_TEXTURE = new Texture(ImageTools.IMAGE_NOT_FOUND, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT);
+
     private List<Texture> textures;
+    public Texture floorTexture, ceilingTexture;
 
     public TexturePack() {
         this.textures = new ArrayList<Texture>();
@@ -33,10 +36,10 @@ public class TexturePack {
 
     public void add(String fp) {
         this.add(new Texture(ImageTools.getImage(fp),DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
-        // this.add(new Texture(ImageTools.getImage(fp)));
     }
 
     public Texture get(int index) {
+        if (index < 0 || index > textures.size() - 1) return NULL_TEXTURE;
         return textures.get(index);
     }
 }

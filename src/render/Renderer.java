@@ -3,21 +3,24 @@ package render;
 import java.awt.*;
 
 import utils.Vector2;
+import world.GameObject;
 import world.Map;
 
 public class Renderer {
     private static TexturePack texturePack;
 
+    private static boolean showHUD = false;
+
     public static void setTexturePack(TexturePack aTexturePack) {
         texturePack = aTexturePack;
     }
 
-    public static void render(Screen screen, Map map, Camera camera) {
+    public static void render(Screen screen, Map map, GameObject camera) {
         Graphics2D g = screen.getGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0,screen.width(),screen.height());
         
-        for (int x = 0; x < screen.width(); x++) {
+        for (int x = 0; x < screen.width(); x+=1) {
             double cameraX = 2 * x / (double)screen.width() - 1.0;
             Vector2 rayDir = new Vector2(camera.direction.x + camera.plane.x * cameraX, camera.direction.y + camera.plane.y * cameraX);
             // starting box
@@ -93,33 +96,35 @@ public class Renderer {
             for (int y = drawStart; y < drawEnd; y++) {
                 int texY = (int)texPos & (tex.height() - 1);
                 texPos += step;
-               // System.out.println(texX+","+texY);
                 int colVal = tex.get(texX,texY);
                 Color c = new Color(colVal);
                 if (side == 1)
                     c = new Color(c.getRed()/2,c.getGreen()/2,c.getBlue()/2);
                 screen.get().setRGB(x, y, c.getRGB());
             }
+            g.setColor(Color.BLACK);
+            g.drawLine(x, 0, x, drawStart);
+            g.setColor(Color.GRAY);
+            g.drawLine(x, drawEnd, x, screen.height()-1);
+        }
 
-            boolean t = false;
-            if (t) { // disabled for now
-                switch (map.get(mapX,mapY)) {
-                case 1:
-                    g.setColor(Color.BLUE);
-                    break;
-                case 2:
-                    g.setColor(Color.RED);
-                    break;
+        if (showHUD) {
+            int size = 40;
+            int width = size * map.width();
+            int height = size * map.height();
+            g.fillRect(0,0,width,height);
+            for (int x = 0; x < map.width()-1; x++) {
+                for (int y = 0; y < map.height()-1; y++) {
+                    if (map.get(x,y) > 0)
+                        g.setColor(Color.BLACK);
+                    else
+                        g.setColor(Color.WHITE);
+                    g.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
                 }
-                if (side == 1) {
-                    Color c = g.getColor();
-                    int r = c.getRed() / 2,
-                        gr = c.getGreen() / 2,
-                        b = c.getBlue() / 2; 
-                    g.setColor(new Color(r, gr, b));
-                }
-                g.drawLine(x, drawStart, x, drawEnd);
             }
+            g.setColor(Color.GREEN);
+            int cx = (int)(camera.position.x * size), cy = (int)(camera.position.y * size);
+            g.fillOval(cx - size/4, cy - size/4, size/2, size/2);
         }
     }
 }

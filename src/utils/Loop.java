@@ -6,7 +6,7 @@ public class Loop {
     private Timer timer;
 
     public Loop(double targetIterationsPerSecond, Loopable loop) {
-        Timer timer = new Timer();
+        timer = new Timer();
         double targetWait = 1.0/targetIterationsPerSecond;
         thread = new Thread(new Runnable() {
             public void run() {
