@@ -6,10 +6,12 @@ import java.awt.event.*;
 
 import render.Renderer;
 import render.Screen;
+import render.Texture;
 import render.TexturePack;
 import utils.*;
 import world.Map;
-import demo.entities.Player;
+import world.SpriteList;
+import world.GameObject;
 
 public class Demo {
     private Screen screen;
@@ -17,29 +19,35 @@ public class Demo {
 
     private Map map;
 
-    private Player player;
+    private GameObject player;
+    private SpriteList sprites;
 
     public Demo() {
         this.window = new Window("Demo");
-        this.screen = new Screen(480*2,360*2);
+        this.screen = new Screen(720,480);
         this.window.setScreen(this.screen);
 
         // set up a t-pack
         TexturePack tp = new TexturePack();
+        Texture planks = new Texture("planks.png");
         tp.add("mcstone.png");
-        tp.add("wood.jpg");
+        tp.add(planks);
+        tp.setFloorTex(new Texture("grass.png"));
+        tp.setCeilingTex(planks);
         Renderer.setTexturePack(tp);
 
-            {1, 0, 0, 0, 0, 0, 0, 0, 1},
         this.map = new Map("maze.txt");
-        player = new Player(this.map, 1.5,1.5);
+        player = new GameObject(this.map, 1.5,1.5);
+        this.sprites = new SpriteList();
         
-        Loop updateLoop = new Loop(20, new Loopable() {
+
+        
+        Loop updateLoop = new Loop(new Loopable() {
             public void loop(double dt) {
                 update(dt);
                 render();
             }
-        });
+        }, 15);
         updateLoop.start();
     }
     
@@ -73,5 +81,9 @@ public class Demo {
     private void render() {
         Renderer.render(this.screen, this.map, this.player);
         this.window.render();
+    }
+
+    public static void main(String[] args) {
+        Demo demo = new Demo();
     }
 }

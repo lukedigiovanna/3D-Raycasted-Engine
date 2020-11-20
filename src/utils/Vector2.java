@@ -49,8 +49,16 @@ public class Vector2 {
         return new Vector2(this.x + other.x, this.y + other.y);
     }
 
+    public Vector2 subtract(Vector2 other) {
+        return new Vector2(this.x - other.x, this.y - other.y);
+    }
+
     public Vector2 times(double scalar) {
         return new Vector2(this.x * scalar, this.y * scalar);
+    }
+
+    public Vector2 divide(double scalar) {
+        return new Vector2(this.x / scalar, this.y / scalar);
     }
 
     public Vector2 copy() {

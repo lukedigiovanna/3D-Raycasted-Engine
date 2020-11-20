@@ -7,6 +7,12 @@ public class GameObject {
 
     private Map map;
 
+    /**
+     * Constructs a game object with a given map for collision and an initial position
+     * @param map Map to start with
+     * @param x initial x position
+     * @param y initial y position
+     */
     public GameObject(Map map, double x, double y) {
         this.position = new Vector2(x, y);
         this.dimension = new Vector2(0.25,0.25);
@@ -17,10 +23,32 @@ public class GameObject {
         this.map = map;
     }
 
+    /**
+     * Sets the current map to use
+     * Determines where the object can and cannot move to
+     * @param map
+     */
     public void setMap(Map map) {
         this.map = map;
     }
 
+    /**
+     * Moves the object forward the specified distance.
+     * Handles collision.
+     * Enter a negative value to move backward
+     * @param forward
+     */
+    public void moveForward(double forward) {
+        this.move(forward, 0);
+    }
+
+    /**
+     * Moves the object forward the given forward amount and to the side the given side amount.
+     * Positive numbers move the object forward or to the right.
+     * Negative numbers move the object backward or to the left.
+     * @param forward
+     * @param side
+     */
     public void move(double forward, double side) {
         Vector2 dir = this.direction.getNormalized().times(forward);
         Vector2 sideV = this.plane.getNormalized().times(side);
@@ -32,9 +60,23 @@ public class GameObject {
             this.position.y += movement.y;
     }
 
-    public void rotate(double theta) {
-        this.direction.rotate(theta);
-        this.plane.rotate(theta);
+    /**
+     * Rotates the object about its z-axis a given radians.
+     * Adjusts the direction and planar vectors.
+     * @param theta Radians to rotate
+     */
+    public void rotate(double radians) {
+        this.direction.rotate(radians);
+        this.plane.rotate(radians);
+    }
+
+    /**
+     * Rotates the object about its z-axis a given degrees.
+     * Adjusts the direction and  planar vectors.
+     * @param degrees Degrees to rotate
+     */
+    public void rotateDeg(double degrees) {
+        this.rotate(Math.toRadians(degrees));
     }
 
 }

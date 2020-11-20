@@ -7,18 +7,45 @@ import world.GameObject;
 import world.Map;
 
 public class Renderer {
-    private static TexturePack texturePack;
+    private static final TexturePack NULL_PACK = new TexturePack();
+    private static TexturePack texturePack = NULL_PACK;
 
     private static boolean showHUD = false;
 
     public static void setTexturePack(TexturePack aTexturePack) {
-        texturePack = aTexturePack;
+        if (aTexturePack != null)
+            texturePack = aTexturePack;
     }
 
     public static void render(Screen screen, Map map, GameObject camera) {
         Graphics2D g = screen.getGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,screen.width(),screen.height());
+
+        Texture floorTex = texturePack.getFloorTexture(),
+                ceilingTex = texturePack.getCeilingTexture();
+
+        Vector2 dir0 = camera.direction.subtract(camera.plane); // left most ray
+        Vector2 dir1 = camera.direction.add(camera.plane); // right most ray
+        double posZ = 0.5 * screen.height(); // puts the horizon in the center of the screen
+        for (int y = 0; y < screen.height()/2; y++) {
+            int dy = - y + screen.height()/2;
+
+            double rowDistance = posZ/dy;
+
+            Vector2 floorStep = dir1.subtract(dir0).times(rowDistance).divide(screen.width());
+            Vector2 floor = camera.position.add(dir0.times(rowDistance));
+
+            for (int x = 0; x < screen.width(); x++) {
+                int floorTX = (int)(floorTex.width() * (floor.x - (int)floor.x)) & (floorTex.width() - 1),
+                    floorTY = (int)(floorTex.height() * (floor.y - (int)floor.y)) & (floorTex.height() - 1);
+                screen.get().setRGB(x, screen.height() - y - 1, floorTex.get(floorTX, floorTY));
+                int ceilTX = (int)(ceilingTex.width() * (floor.x - (int)floor.x)) & (ceilingTex.width() - 1),
+                    ceilTY = (int)(ceilingTex.height() * (floor.y - (int)floor.y)) & (ceilingTex.height() - 1);
+                screen.get().setRGB(x, y, ceilingTex.get(ceilTX, ceilTY));
+                
+                floor.x += floorStep.x;
+                floor.y += floorStep.y;
+            }
+        }
         
         for (int x = 0; x < screen.width(); x+=1) {
             double cameraX = 2 * x / (double)screen.width() - 1.0;
@@ -85,8 +112,7 @@ public class Renderer {
             // actually rendering to the screen
             Texture tex = texturePack.get(map.get(mapX, mapY)-1);
             double wallX = (side == 0) ? camera.position.y + perpWallDist * rayDir.y : camera.position.x + perpWallDist * rayDir.x;
-           // System.out.println(perpWallDist+" "+wallX);
-            wallX -= Math.floor(wallX);
+            wallX -= Math.floor(wallX); // get just the decimal component
             int texX = (int)(wallX * tex.width());
             // if (side == 0 && rayDir.x < 0) texX = tex.width() - texX - 1;
             // if (side == 1 && rayDir.y < 0) texX = tex.width() - texX - 1;
@@ -102,19 +128,20 @@ public class Renderer {
                     c = new Color(c.getRed()/2,c.getGreen()/2,c.getBlue()/2);
                 screen.get().setRGB(x, y, c.getRGB());
             }
-            g.setColor(Color.BLACK);
-            g.drawLine(x, 0, x, drawStart);
-            g.setColor(Color.GRAY);
-            g.drawLine(x, drawEnd, x, screen.height()-1);
+
+            // g.setColor(Color.BLACK);
+            // g.drawLine(x, 0, x, drawStart);
+            // g.setColor(Color.GRAY);
+            // g.drawLine(x, drawEnd, x, screen.height()-1);
         }
 
         if (showHUD) {
-            int size = 40;
+            int size = 20; 
             int width = size * map.width();
             int height = size * map.height();
             g.fillRect(0,0,width,height);
-            for (int x = 0; x < map.width()-1; x++) {
-                for (int y = 0; y < map.height()-1; y++) {
+            for (int x = 0; x < map.width(); x++) {
+                for (int y = 0; y < map.height(); y++) {
                     if (map.get(x,y) > 0)
                         g.setColor(Color.BLACK);
                     else

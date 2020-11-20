@@ -1,6 +1,7 @@
 package render;
 
 import java.awt.image.*;
+import java.awt.Color;
 
 import utils.ImageTools;
 
@@ -32,6 +33,12 @@ public class Texture {
 
     public Texture(BufferedImage image, int width, int height) {
         this.image = ImageTools.rescale(image, width, height);
+    }
+
+    public Texture(Color color, int width, int height) {
+        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        img.setRGB(0,0,color.getRGB());
+        this.image = ImageTools.rescale(img, width, height);
     }
 
     public int get(int px, int py) {

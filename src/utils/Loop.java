@@ -5,7 +5,19 @@ public class Loop {
     private boolean running = false;
     private Timer timer;
 
-    public Loop(double targetIterationsPerSecond, Loopable loop) {
+    public Loop(Loopable loop) {
+        timer = new Timer();
+        thread = new Thread(new Runnable() {
+            public void run() {
+                while (running) {
+                    double dt = timer.mark();
+                    loop.loop(dt);
+                }
+            }
+        });
+    }
+
+    public Loop(Loopable loop, double targetIterationsPerSecond) {
         timer = new Timer();
         double targetWait = 1.0/targetIterationsPerSecond;
         thread = new Thread(new Runnable() {

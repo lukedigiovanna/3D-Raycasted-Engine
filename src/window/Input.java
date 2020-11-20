@@ -23,8 +23,10 @@ public class Input {
         };
     }
 
+    private JPanel panel;
     public void link(JPanel panel) {
-        panel.addKeyListener(key);
+        this.panel = panel;
+        this.panel.addKeyListener(key);
     }
 
     public boolean keyDown(int kc) {

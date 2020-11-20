@@ -14,10 +14,50 @@ public class TexturePack {
     private static Texture NULL_TEXTURE = new Texture(ImageTools.IMAGE_NOT_FOUND, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT);
 
     private List<Texture> textures;
-    public Texture floorTexture, ceilingTexture;
+    private Texture floorTexture, ceilingTexture;
 
     public TexturePack() {
         this.textures = new ArrayList<Texture>();
+    }
+
+    public void setFloorTex(Texture tex) {
+        this.floorTexture = tex;
+    }
+
+    public void setFloorTex(Color color) {
+        this.setFloorTex(new Texture(color, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public void setFloorTex(String fp) {
+        this.setFloorTex(new Texture(fp, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public void setFloorTex(BufferedImage bi) {
+        this.setFloorTex(new Texture(bi, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public Texture getFloorTexture() {
+        return (this.floorTexture == null) ? NULL_TEXTURE : this.floorTexture;
+    }
+
+    public void setCeilingTex(Texture tex) {
+        this.ceilingTexture = tex;
+    }
+
+    public void setCeilingTex(Color color) {
+        this.setCeilingTex(new Texture(color, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public void setCeilingTex(String fp) {
+        this.setCeilingTex(new Texture(fp, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public void setCeilingTex(BufferedImage bi) {
+        this.setCeilingTex(new Texture(bi, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+    }
+
+    public Texture getCeilingTexture() {
+        return (this.ceilingTexture == null) ? NULL_TEXTURE : this.ceilingTexture;
     }
 
     public void add(Texture texture) {
@@ -25,9 +65,7 @@ public class TexturePack {
     }
 
     public void add(Color color) {
-        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-        img.setRGB(0,0,color.getRGB());
-        this.add(new Texture(img, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
+        this.add(new Texture(color, DEFAULT_TEX_WIDTH, DEFAULT_TEX_HEIGHT));
     }
 
     public void add(BufferedImage bi) {
