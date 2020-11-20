@@ -24,15 +24,16 @@ public class Demo {
 
     public Demo() {
         this.window = new Window("Demo");
-        this.screen = new Screen(720,480);
+        this.screen = new Screen(1920,1080);
         this.window.setScreen(this.screen);
 
         // set up a t-pack
         TexturePack tp = new TexturePack();
-        Texture planks = new Texture("planks.png");
-        tp.add("mcstone.png");
+        Texture planks = new Texture("planks2x2.png");
+        tp.add("diamond2x2.png");
+        tp.add("mcstone2x2.png");
         tp.add(planks);
-        tp.setFloorTex(new Texture("grass.png"));
+        tp.setFloorTex(new Texture("grass2x2.png"));
         tp.setCeilingTex(planks);
         Renderer.setTexturePack(tp);
 
@@ -40,14 +41,12 @@ public class Demo {
         player = new GameObject(this.map, 1.5,1.5);
         this.sprites = new SpriteList();
         
-
-        
         Loop updateLoop = new Loop(new Loopable() {
             public void loop(double dt) {
                 update(dt);
                 render();
             }
-        }, 15);
+        }, 20);
         updateLoop.start();
     }
     

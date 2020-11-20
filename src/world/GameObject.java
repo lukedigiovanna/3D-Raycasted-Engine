@@ -79,4 +79,14 @@ public class GameObject {
         this.rotate(Math.toRadians(degrees));
     }
 
+    /**
+     * Returns the squared distance to another GameObject
+     * @param other
+     * @return
+     */
+    public double squaredDistanceTo(GameObject other) {
+        double dx = this.position.x - other.position.x, dy = this.position.y - other.position.y;
+        return dx * dx + dy * dy;
+    }
+
 }
