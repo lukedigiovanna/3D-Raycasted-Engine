@@ -42,6 +42,8 @@ public class Texture {
     }
 
     public int get(int px, int py) {
+        if (px < 0 || px > image.getWidth() - 1 || py < 0 || py > image.getHeight() - 1)
+            return 0xFFFF0000;
         return image.getRGB(px, py);
     }
 

@@ -3,6 +3,7 @@ package demo;
 import render.Screen;
 import render.Texture;
 import render.TexturePack;
+import utils.ImageTools;
 import utils.Loop;
 import utils.Loopable;
 import window.Window;
@@ -30,22 +31,14 @@ public class EasyDemo {
         tp.setFloorTex("grass.jpg"); // make the floor grass
         tp.setCeilingTex(Color.CYAN); // make the ceiling blue to simulate sky
         Renderer.setTexturePack(tp);
-        
-        // generate a map
-        // int[][] mapData = {
-        //     {0, 0, 1, 1, 1},
-        //     {1, 0, 0, 0, 1},
-        //     {1, 0, 0, 0, 1},
-        //     {1, 0, 0, 0, 1},
-        //     {1, 1, 1, 1, 1},
-        // };
+
         int[][] mapData = new int[25][25];
         for (int i = 0; i < 25; i++) { mapData[i][0] = 1; mapData[i][24] = 1; mapData[0][i] = 1; mapData[24][i] = 1; }
         Map map = new Map(mapData);
         
         SpriteList sprites = new SpriteList();
         for (int i = 0; i < 5; i++) 
-            sprites.add(new Sprite(new Texture("creeper.png", 64, 64), map, Math.random() * 10, Math.random() * 10));
+            sprites.add(new Sprite(new Texture(ImageTools.getImage("creeper.png")), map, Math.random() * 10, Math.random() * 10));
 
         // create a player to be the base of the camera
         GameObject player = new GameObject(map, 2, 2);

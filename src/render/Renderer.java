@@ -160,13 +160,14 @@ public class Renderer {
                 floor.y += floorStep.y;
             }
         }
-
+        
         // now draw sprites
         if (sprites != null) {
             double invDet = 1.0 / (camera.plane.x * camera.direction.y - camera.direction.x * camera.plane.y);
             Sprite[] ordered = sprites.getOrdered(camera);
             for (int i = 0; i < ordered.length; i++) {
                 Sprite sprite = ordered[i];
+                Texture tex = sprite.getTexture();
                 
                 double sx = sprite.position.x - camera.position.x,
                     sy = sprite.position.y - camera.position.y;
@@ -175,32 +176,35 @@ public class Renderer {
                     transformY = invDet * (-camera.plane.y * sx + camera.plane.x * sy);
                 
                 int spriteScreenX = (int)((screen.width()/2)*(1+transformX/transformY));
-                int spriteHeight = Math.abs((int)(screen.height() / transformY));
                 
-                int drawStartY = -spriteHeight / 2 + screen.height()/2;
+                double vMove = 0;
+                if (sprite.renderPos == Sprite.FLOOR)
+                    vMove = tex.height()*3;
+                if (sprite.renderPos == Sprite.CEILING)
+                    vMove = -tex.height()*3; 
+                int vMoveScreen = (int)(vMove/transformY);
+
+                int spriteHeight = Math.abs((int)(screen.height() / transformY * sprite.yScale));
+                int drawStartY = -spriteHeight / 2 + screen.height()/2 + vMoveScreen;
                 int drawEndY = drawStartY + spriteHeight;   
                 if (drawStartY < 0) drawStartY = 0;     
                 if (drawEndY > screen.height() - 1) drawEndY = screen.height() - 1;
                 
-                int spriteWidth = Math.abs((int)(screen.height() / transformY));
+                int spriteWidth = Math.abs((int)(screen.height() / transformY * sprite.xScale));
                 int drawStartX = -spriteWidth / 2 + spriteScreenX;
                 int drawEndX = drawStartX + spriteWidth;
                 if (drawStartX < 0) drawStartX = 0;
                 if (drawEndX > screen.width() - 1) drawEndX = screen.width() -  1;
 
-                Texture tex = sprite.getTexture();
                 for (int x = drawStartX; x < drawEndX; x++) {
                     int texX = (int)((x - (-spriteWidth/2+spriteScreenX)) * tex.width()/spriteWidth);    
                     if (transformY > 0 && transformY < zBuff[x])
                     for (int y = drawStartY; y < drawEndY; y++) {
-                        double d = y - screen.height() / 2.0 + spriteHeight / 2.0;
+                        double d = y - vMoveScreen - screen.height() / 2.0 + spriteHeight / 2.0;
                         int texY = (int) ((d * tex.height()) / spriteHeight);
                         int rgb = tex.get(texX,texY);
-                        Color c = new Color(rgb);
-                        c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 125);
-                        //if ((new Color(rgb)).getAlpha() > 0)
-
-                            screen.get().setRGB(x, y, c.getRGB());
+                        if (rgb >>> 24 > 0)
+                            screen.get().setRGB(x, y, rgb);
                     }
                 }
             }

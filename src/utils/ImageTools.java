@@ -80,12 +80,13 @@ public class ImageTools {
 	}
 	
 	public static BufferedImage rescale(BufferedImage image, int newWidth, int newHeight) {
-		BufferedImage rescaled = new BufferedImage(newWidth, newHeight, image.getType());
+		BufferedImage rescaled = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
 		float widthFactor = (float)image.getWidth()/newWidth, heightFactor = (float)image.getHeight()/newHeight; 
-		System.out.println(widthFactor);
 		for (int x = 0; x < newWidth; x++) 
-			for (int y = 0; y < newHeight; y++) 
-				rescaled.setRGB(x, y, image.getRGB((int)(x*widthFactor), (int)(y*heightFactor)));
+			for (int y = 0; y < newHeight; y++) {
+				int rgb = image.getRGB((int)(x*widthFactor), (int)(y*heightFactor));
+				rescaled.setRGB(x, y, rgb);
+			}
 		return rescaled;
 	}
 	

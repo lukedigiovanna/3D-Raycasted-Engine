@@ -10,6 +10,7 @@ import render.Texture;
 import render.TexturePack;
 import utils.*;
 import world.Map;
+import world.Sprite;
 import world.SpriteList;
 import world.GameObject;
 
@@ -37,9 +38,16 @@ public class Demo {
         tp.setCeilingTex(planks);
         Renderer.setTexturePack(tp);
 
+        
         this.map = new Map("maze.txt");
         player = new GameObject(this.map, 1.5,1.5);
         this.sprites = new SpriteList();
+        Texture creeper = new Texture("creeper.png", 64, 64);
+        for (int i = 0; i < 35; i++) {
+            Sprite s = new Sprite(creeper,map,Math.random()*map.width(),Math.random()*map.height(), 0.75, 0.75);
+            s.renderPos = Sprite.FLOOR;
+            sprites.add(s);
+        }
         
         Loop updateLoop = new Loop(new Loopable() {
             public void loop(double dt) {
@@ -78,7 +86,7 @@ public class Demo {
     }
     
     private void render() {
-        Renderer.render(this.screen, this.map, this.player);
+        Renderer.render(this.screen, this.map, this.sprites, this.player);
         this.window.render();
     }
 
