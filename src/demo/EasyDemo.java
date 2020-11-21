@@ -38,7 +38,7 @@ public class EasyDemo {
         
         SpriteList sprites = new SpriteList();
         for (int i = 0; i < 5; i++) 
-            sprites.add(new Sprite(new Texture(ImageTools.getImage("creeper.png")), map, Math.random() * 10, Math.random() * 10));
+            sprites.add(new Sprite(new Texture(ImageTools.getImage("creeper.png"), 64, 64), map, Math.random() * 10, Math.random() * 10));
 
         // create a player to be the base of the camera
         GameObject player = new GameObject(map, 2, 2);

@@ -14,7 +14,7 @@ public class Sprite extends GameObject {
 
     private Texture texture;
     public double xScale, yScale;
-    public int renderPos = FLOOR;
+    public int renderPos = CENTER;
 
     public Sprite(Texture texture, Map map, double x, double y) {
         this(texture, map, x, y, 1.0, 1.0);
