@@ -1,17 +1,17 @@
-package demo;
+package jraycast.demo;
 
-import render.Screen;
-import render.Texture;
-import render.TexturePack;
-import utils.ImageTools;
-import utils.Loop;
-import utils.Loopable;
-import window.Window;
-import world.GameObject;
-import world.Map;
-import world.Sprite;
-import world.SpriteList;
-import render.Renderer;
+import jraycast.render.Screen;
+import jraycast.render.Texture;
+import jraycast.render.TexturePack;
+import jraycast.utils.ImageTools;
+import jraycast.utils.Loop;
+import jraycast.utils.Loopable;
+import jraycast.window.Window;
+import jraycast.world.GameObject;
+import jraycast.world.Map;
+import jraycast.world.Sprite;
+import jraycast.world.SpriteList;
+import jraycast.render.Renderer;
 
 import java.awt.Color; 
 import java.awt.event.*;

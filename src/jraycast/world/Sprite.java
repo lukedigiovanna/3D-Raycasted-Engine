@@ -1,6 +1,6 @@
-package world;
+package jraycast.world;
 
-import render.Texture;
+import jraycast.render.Texture;
 
 /**
  * A sprite is a game object with a texture that will be rendered. This is

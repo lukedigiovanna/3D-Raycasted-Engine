@@ -1,9 +1,9 @@
-package window;
+package jraycast.window;
 
 import javax.swing.*;
 
-import utils.Program;
-import render.Screen;
+import jraycast.utils.Program;
+import jraycast.render.Screen;
 
 public class Window {
     private JFrame frame;

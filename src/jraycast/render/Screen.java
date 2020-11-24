@@ -1,6 +1,6 @@
-package render;
+package jraycast.render;
 
-import utils.Program;
+import jraycast.utils.Program;
 import java.awt.image.*;
 import java.awt.*;
 

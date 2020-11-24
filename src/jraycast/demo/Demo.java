@@ -1,18 +1,18 @@
-package demo;
+package jraycast.demo;
 
-import window.Window;
+import jraycast.window.Window;
 
 import java.awt.event.*;
 
-import render.Renderer;
-import render.Screen;
-import render.Texture;
-import render.TexturePack;
-import utils.*;
-import world.Map;
-import world.Sprite;
-import world.SpriteList;
-import world.GameObject;
+import jraycast.render.Renderer;
+import jraycast.render.Screen;
+import jraycast.render.Texture;
+import jraycast.render.TexturePack;
+import jraycast.utils.*;
+import jraycast.world.Map;
+import jraycast.world.Sprite;
+import jraycast.world.SpriteList;
+import jraycast.world.GameObject;
 
 public class Demo {
     private Screen screen;

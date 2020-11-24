@@ -1,4 +1,4 @@
-package utils;
+package jraycast.utils;
 
 public class Loop {
     private Thread thread;

@@ -1,8 +1,8 @@
-package render;
+package jraycast.render;
 
 import java.util.*;
 
-import utils.ImageTools;
+import jraycast.utils.ImageTools;
 
 import java.awt.image.*;
 import java.awt.Color;

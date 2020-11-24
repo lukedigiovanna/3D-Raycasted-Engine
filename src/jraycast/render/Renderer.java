@@ -1,18 +1,26 @@
-package render;
+package jraycast.render;
 
 import java.awt.*;
 
-import utils.Vector2;
-import world.GameObject;
-import world.Map;
-import world.Sprite;
-import world.SpriteList;
+import jraycast.utils.Vector2;
+import jraycast.world.GameObject;
+import jraycast.world.Map;
+import jraycast.world.Sprite;
+import jraycast.world.SpriteList;
 
 public class Renderer {
     private static final TexturePack NULL_PACK = new TexturePack();
     private static TexturePack texturePack = NULL_PACK;
 
     private static boolean showHUD = false;
+
+    public static void showHUD() {
+        showHUD = true;
+    }
+
+    public static void hideHUD() {
+        showHUD = false;
+    }
 
     public static void setTexturePack(TexturePack aTexturePack) {
         if (aTexturePack != null)
@@ -84,7 +92,7 @@ public class Renderer {
             }
 
             // DDA
-            while (map.get(mapX,mapY) == 0) {
+            while (!map.hasWall(mapX, mapY)) {
                 if (sideDistX < sideDistY) {
                     sideDistX += deltaDistX;
                     mapX += stepX;
@@ -211,7 +219,7 @@ public class Renderer {
         }
 
         if (showHUD) {
-            int size = 20; 
+            int size = screen.width()/2/((map.width() > map.height()) ? map.width() : map.height()); 
             int width = size * map.width();
             int height = size * map.height();
             g.fillRect(0,0,width,height);

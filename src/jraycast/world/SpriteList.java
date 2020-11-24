@@ -1,4 +1,4 @@
-package world;
+package jraycast.world;
 
 import java.util.ArrayList;
 import java.util.List;

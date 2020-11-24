@@ -1,4 +1,4 @@
-package window;
+package jraycast.window;
 
 import java.awt.event.*;
 import java.util.HashMap;

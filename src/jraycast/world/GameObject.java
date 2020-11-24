@@ -1,6 +1,6 @@
-package world;
+package jraycast.world;
 
-import utils.Vector2;
+import jraycast.utils.Vector2;
 
 public class GameObject {
     public Vector2 position, dimension, direction, plane;

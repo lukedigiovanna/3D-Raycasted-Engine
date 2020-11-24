@@ -1,9 +1,9 @@
-package render;
+package jraycast.render;
 
 import java.awt.image.*;
 import java.awt.Color;
 
-import utils.ImageTools;
+import jraycast.utils.ImageTools;
 
 public class Texture {
     private BufferedImage image;

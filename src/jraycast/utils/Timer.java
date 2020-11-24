@@ -1,4 +1,4 @@
-package utils;
+package jraycast.utils;
 
 public class Timer {
     private long last;

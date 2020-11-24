@@ -1,4 +1,4 @@
-package utils;
+package jraycast.utils;
 
 import java.awt.Color;
 import java.awt.Image;
